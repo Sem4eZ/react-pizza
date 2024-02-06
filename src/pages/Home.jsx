@@ -10,28 +10,37 @@ const Home = () => {
   const [items, setItems] = useState([]);
   let [isDownload, setIsDownload] = useState(true);
 
+  const [categoryId, setCategoryId] = useState(0);
+  const [sortType, setSortType] = useState(0);
+
   useEffect(() => {
-    fetch("https://65bbae1852189914b5bcdaf4.mockapi.io/items")
+    setIsDownload(true);
+    fetch(
+      "https://65bbae1852189914b5bcdaf4.mockapi.io/items?category=" + categoryId
+    )
       .then((res) => {
         return res.json();
       })
       .then((arr) => {
         setItems(arr);
-        setIsDownload(!isDownload);
+        setIsDownload(false);
       });
     window.scrollTo(0, 0);
-  }, []);
+  }, [categoryId]);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories />
+        <Categories
+          value={categoryId}
+          onClickCategory={(id) => setCategoryId(id)}
+        />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isDownload
-          ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
+          ? [...new Array(4)].map((_, index) => <Skeleton key={index} />)
           : items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
       </div>
     </div>

@@ -35,7 +35,7 @@ const Sort = () => {
           <ul>
             {sortName.map((name, index) => (
               <li
-                classNameName={sortNameChoose === index ? "active" : ""}
+                className={sortNameChoose === index ? "active" : ""}
                 key={index}
                 onClick={() => onClickListItem(index)}
               >
