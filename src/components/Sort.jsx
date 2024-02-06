@@ -5,8 +5,8 @@ const Sort = ({ value, onClickSorting }) => {
   const [sortNameChoose, setSortNameChoose] = useState(0);
 
   const sortName = [
-    { name: "Менее популярные", sortProperty: "-rating" },
     { name: "Самые популярные", sortProperty: "rating" },
+    { name: "Менее популярные", sortProperty: "-rating" },
     { name: "Дорогие", sortProperty: "price" },
     { name: "Недорогие", sortProperty: "-price" },
     { name: "алфавиту (А-Я)", sortProperty: "-title" },

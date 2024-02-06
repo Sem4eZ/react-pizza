@@ -11,7 +11,10 @@ const Home = () => {
   let [isDownload, setIsDownload] = useState(true);
 
   const [categoryId, setCategoryId] = useState(0);
-  const [sortType, setSortType] = useState({});
+  const [sortType, setSortType] = useState({
+    name: "Самые популярные",
+    sortProperty: "rating",
+  });
   console.log(categoryId, sortType);
 
   useEffect(() => {
