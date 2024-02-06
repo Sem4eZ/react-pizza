@@ -15,7 +15,6 @@ const Home = () => {
     name: "Самые популярные",
     sortProperty: "rating",
   });
-  console.log(categoryId, sortType);
 
   useEffect(() => {
     setIsDownload(true);
