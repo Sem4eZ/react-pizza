@@ -13,10 +13,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCategoryId } from "../redux/slices/filterSlice";
 
 const Home = () => {
-  const categoryId = useSelector((state) => state.filter.categoryId);
-  const sortType = useSelector((state) => state.filter.sort.sortProperty);
+  const { categoryId, sort } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
-  console.log(sortType);
 
   const { searchValue } = useContext(SearchContext);
   const [items, setItems] = useState([]);
@@ -29,10 +27,10 @@ const Home = () => {
 
   useEffect(() => {
     setIsDownload(true);
-    if (sortType) {
-      const sortBy = sortType.replace("-", "");
-      console.log(sortType, "useeff");
-      const orderBy = sortType.includes("-") ? "asc" : "desc";
+    if (sort) {
+      const sortBy = sort.sortProperty.replace("-", "");
+      console.log(sort.sortProperty, "useeff");
+      const orderBy = sort.sortProperty.includes("-") ? "asc" : "desc";
       const category = categoryId > 0 ? `category=${categoryId}` : "";
       const search = searchValue ? `search=${searchValue}` : "";
       fetch(
@@ -47,7 +45,7 @@ const Home = () => {
         });
       window.scrollTo(0, 0);
     }
-  }, [categoryId, sortType, searchValue, currentPage]);
+  }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   const skeleton = [...new Array(4)].map((_, index) => (
     <Skeleton key={index} />

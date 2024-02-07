@@ -2,25 +2,23 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSort } from "../redux/slices/filterSlice";
 
+const sortName = [
+  { name: "Самые популярные", sortProperty: "rating" },
+  { name: "Менее популярные", sortProperty: "-rating" },
+  { name: "Дорогие", sortProperty: "price" },
+  { name: "Недорогие", sortProperty: "-price" },
+  { name: "алфавиту (А-Я)", sortProperty: "-title" },
+  { name: "алфавиту (Я-А)", sortProperty: "title" },
+];
+
 const Sort = () => {
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filter.sort);
 
   const [isVisible, setIsVisible] = useState(false);
-  const [sortNameChoose, setSortNameChoose] = useState(0);
-
-  const sortName = [
-    { name: "Самые популярные", sortProperty: "rating" },
-    { name: "Менее популярные", sortProperty: "-rating" },
-    { name: "Дорогие", sortProperty: "price" },
-    { name: "Недорогие", sortProperty: "-price" },
-    { name: "алфавиту (А-Я)", sortProperty: "-title" },
-    { name: "алфавиту (Я-А)", sortProperty: "title" },
-  ];
 
   const onClickListItem = (id) => {
     dispatch(setSort(id));
-    setSortNameChoose(id);
     setIsVisible(!isVisible);
   };
   return (
@@ -52,7 +50,6 @@ const Sort = () => {
                 key={index}
                 onClick={() => {
                   onClickListItem(obj);
-                  // onClickSorting(obj);
                 }}
               >
                 {obj.name}
