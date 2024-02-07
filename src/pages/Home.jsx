@@ -11,6 +11,7 @@ import { SearchContext } from "../App";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setCategoryId } from "../redux/slices/filterSlice";
+import axios from "axios";
 
 const Home = () => {
   const { categoryId, sort } = useSelector((state) => state.filter);
@@ -33,14 +34,23 @@ const Home = () => {
       const orderBy = sort.sortProperty.includes("-") ? "asc" : "desc";
       const category = categoryId > 0 ? `category=${categoryId}` : "";
       const search = searchValue ? `search=${searchValue}` : "";
-      fetch(
-        `https://65bbae1852189914b5bcdaf4.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${orderBy}&${search}`
-      )
-        .then((res) => {
-          return res.json();
-        })
-        .then((arr) => {
-          setItems(arr);
+      // fetch(
+      //   `https://65bbae1852189914b5bcdaf4.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${orderBy}&${search}`
+      // )
+      //   .then((res) => {
+      //     return res.json();
+      //   })
+      //   .then((arr) => {
+      //     setItems(arr);
+      //     setIsDownload(false);
+      //   });
+
+      axios
+        .get(
+          `https://65bbae1852189914b5bcdaf4.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${orderBy}&${search}`
+        )
+        .then((response) => {
+          setItems(response.data);
           setIsDownload(false);
         });
       window.scrollTo(0, 0);
