@@ -28,12 +28,10 @@ const Categories = ({ value }) => {
             }}
             className={value === index ? "active" : ""}
           >
-            {/* {console.log(index)} */}
             {item}
           </li>
         ))}
       </ul>
-      {console.log(categoryId, "cat")}
     </div>
   );
 };

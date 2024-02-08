@@ -80,13 +80,6 @@ const Home = () => {
           sort,
         })
       );
-
-      if (
-        window.location.search !==
-        "?sortProperty=rating&categoryId=0&currentPage=1"
-      ) {
-        isSearch.current = true;
-      }
     }
   }, []);
 
