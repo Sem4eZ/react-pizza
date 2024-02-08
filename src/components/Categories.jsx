@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-
-const Categories = ({ value, onClickCategory }) => {
+import { useSelector, useDispatch } from "react-redux";
+import { setCategoryId } from "../redux/slices/filterSlice";
+const Categories = ({ value }) => {
+  const categoryId = useSelector((state) => state.filter.categoryId);
+  const dispatch = useDispatch();
   const categories = [
     "Все",
     "Мясные",
@@ -9,7 +12,10 @@ const Categories = ({ value, onClickCategory }) => {
     "Острые",
     "Закрытые",
   ];
-  const [activeIndex, setActiveIndex] = useState(0);
+
+  const onChangeCategory = React.useCallback((idx) => {
+    dispatch(setCategoryId(idx));
+  }, []);
 
   return (
     <div className="categories">
@@ -18,15 +24,16 @@ const Categories = ({ value, onClickCategory }) => {
           <li
             key={index}
             onClick={() => {
-              onClickCategory(index);
-              setActiveIndex(index);
+              onChangeCategory(index);
             }}
-            className={activeIndex === index ? "active" : ""}
+            className={value === index ? "active" : ""}
           >
+            {/* {console.log(index)} */}
             {item}
           </li>
         ))}
       </ul>
+      {console.log(categoryId, "cat")}
     </div>
   );
 };
