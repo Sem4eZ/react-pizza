@@ -1,23 +1,45 @@
 import React, { useState } from "react";
-
-const PizzaBlock = (props) => {
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import cartSlice, { addItem } from "../../redux/slices/cartSlice";
+const PizzaBlock = ({ id, title, price, imageUrl, sizes, types, rating }) => {
+  const dispatch = useDispatch();
   let [pizzaCount, setPizzaCount] = useState(0);
 
   const handleAddPizza = () => {
     setPizzaCount(++pizzaCount);
   };
+
+  const cartItem = useSelector((state) =>
+    state.cart.items.find((obj) => obj.id === id)
+  );
+
+  const addedCount = cartItem ? cartItem.count : 0;
   const typeOfDough = ["тонкое", "традиционное"];
   const [activeType, setActiveType] = useState(null);
   const [activeSize, setActiveSize] = useState(null);
 
+  const onClickAdd = () => {
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: typeOfDough[activeType],
+      size: activeSize,
+    };
+    dispatch(addItem(item));
+    handleAddPizza();
+  };
+
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={props.imageUrl} alt="Pizza" />
-        <h4 className="pizza-block__title">{props.title}</h4>
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
-            {props.types.map((type) => (
+            {types.map((type) => (
               <li
                 onClick={() => setActiveType(type)}
                 className={activeType === type ? "active" : ""}
@@ -28,7 +50,7 @@ const PizzaBlock = (props) => {
             ))}
           </ul>
           <ul>
-            {props.sizes.map((size) => (
+            {sizes.map((size) => (
               <li
                 onClick={() => setActiveSize(size)}
                 className={activeSize === size ? "active" : ""}
@@ -40,9 +62,9 @@ const PizzaBlock = (props) => {
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {props.price} ₽</div>
+          <div className="pizza-block__price">от {price} ₽</div>
           <button
-            onClick={handleAddPizza}
+            onClick={onClickAdd}
             className="button button--outline button--add"
           >
             <svg
@@ -58,7 +80,7 @@ const PizzaBlock = (props) => {
               />
             </svg>
             <span>Добавить</span>
-            <i>{pizzaCount}</i>
+            {addedCount > 0 && <i>{addedCount}</i>}
           </button>
         </div>
       </div>
