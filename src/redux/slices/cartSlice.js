@@ -24,10 +24,18 @@ const cartSlice = createSlice({
         });
       }
       //   state.items.push(action.payload);
-      state.totalPrice = state.totalPrice + action.payload.price;
+      state.totalPrice = state.items.reduce((sum, acc) => {
+        return acc.price * acc.count + sum;
+      }, 0);
+    },
+    minusItem(state, action) {
+      const findItem = state.items.find((obj) => obj.id === action.payload);
+      if (findItem) {
+        findItem.count--;
+      }
     },
     removeItem(state, action) {
-      state.items.filter((obj) => obj.id !== action.payload);
+      state.items = state.items.filter((obj) => obj.id !== action.payload);
     },
     clearItem(state, action) {
       state.items = [];
@@ -35,6 +43,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addItem, removeItem, clearItem } = cartSlice.actions;
+export const { addItem, removeItem, clearItem, minusItem } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -16,8 +16,8 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types, rating }) => {
 
   const addedCount = cartItem ? cartItem.count : 0;
   const typeOfDough = ["тонкое", "традиционное"];
-  const [activeType, setActiveType] = useState(null);
-  const [activeSize, setActiveSize] = useState(null);
+  const [activeType, setActiveType] = useState(0);
+  const [activeSize, setActiveSize] = useState(0);
 
   const onClickAdd = () => {
     const item = {
@@ -26,7 +26,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types, rating }) => {
       price,
       imageUrl,
       type: typeOfDough[activeType],
-      size: activeSize,
+      size: sizes[activeSize],
     };
     dispatch(addItem(item));
     handleAddPizza();
@@ -50,13 +50,14 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types, rating }) => {
             ))}
           </ul>
           <ul>
-            {sizes.map((size) => (
+            {sizes.map((size, index) => (
               <li
-                onClick={() => setActiveSize(size)}
-                className={activeSize === size ? "active" : ""}
+                onClick={() => setActiveSize(index)}
+                className={activeSize === index ? "active" : ""}
                 key={size}
               >
                 {size}
+                {console.log(size)}
               </li>
             ))}
           </ul>

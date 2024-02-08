@@ -6,6 +6,10 @@ import cartSlice from "../redux/slices/cartSlice";
 import { useSelector } from "react-redux";
 const Header = () => {
   const { items, totalPrice } = useSelector((state) => state.cart);
+  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalSum = items.reduce((sum, acc) => {
+    return acc.price * acc.count + sum;
+  }, 0);
   return (
     <div className="header">
       <div className="container">
@@ -26,7 +30,7 @@ const Header = () => {
         <Search />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
-            <span>{totalPrice} ₽</span>
+            <span>{totalSum} ₽</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -57,7 +61,7 @@ const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{items.length}</span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>
