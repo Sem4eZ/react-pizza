@@ -15,9 +15,9 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types, rating }) => {
   );
 
   const addedCount = cartItem ? cartItem.count : 0;
-  const typeOfDough = ["тонкое", "традиционное"];
+  const typeOfDough = ["традиционное", "тонкое"];
   const [activeType, setActiveType] = useState(0);
-  const [activeSize, setActiveSize] = useState(0);
+  const [activeSize, setActiveSize] = useState(1);
 
   const onClickAdd = () => {
     const item = {
@@ -39,10 +39,10 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types, rating }) => {
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
-            {types.map((type) => (
+            {types.map((type, index) => (
               <li
                 onClick={() => setActiveType(type)}
-                className={activeType === type ? "active" : ""}
+                className={activeType === index ? "active" : ""}
                 key={type}
               >
                 {typeOfDough[type]}
@@ -57,7 +57,6 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types, rating }) => {
                 key={size}
               >
                 {size}
-                {console.log(size)}
               </li>
             ))}
           </ul>
