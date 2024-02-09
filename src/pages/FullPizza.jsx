@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const FullPizza = () => {
+  const { id } = useParams();
+  const [pizza, setPizza] = useState();
+
+  useEffect(() => {
+    async function fetchPizza() {
+      try {
+        const { data } = await axios.get(
+          `https://65bbae1852189914b5bcdaf4.mockapi.io/items/${id}`
+        );
+        setPizza(data);
+      } catch (error) {
+        alert("Ошибка при получении питсы");
+      }
+    }
+
+    fetchPizza();
+  }, []);
+
+  if (!pizza) {
+    return <div className="container">Идет загрузка питсы</div>;
+  }
+
   return (
-    <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis
-      dicta aut molestias cumque dignissimos. Similique adipisci at est magni
-      debitis! Officiis itaque dolores commodi cumque culpa est, error velit
-      aut, vel ea, asperiores accusantium ipsum quam optio dignissimos
-      molestias. Consequatur assumenda impedit vitae quam quasi quidem ad
-      quaerat ipsum culpa.
+    <div className="container">
+      <img src={pizza.imageUrl} alt="" />
+      <h1>{pizza.title}</h1>
+      <h2>от  {pizza.price} ₽</h2>
     </div>
   );
 };

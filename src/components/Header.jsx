@@ -19,7 +19,7 @@ const Header = () => {
             <img
               width="38"
               src="
-              img/pizza-logo.svg"
+              /img/pizza-logo.svg"
               alt="Pizza logo"
             />
             <div>
