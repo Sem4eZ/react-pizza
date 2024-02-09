@@ -84,7 +84,7 @@ const Home = () => {
 
     isSearch.current = false;
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
-
+  
   const pizzas = items.map((obj) => (
     <Link to={`/pizza/${obj.id}`}>
       <PizzaBlock key={obj.id} {...obj} />
