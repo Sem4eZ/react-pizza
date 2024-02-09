@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-const FullPizza = () => {
+
+interface PizzaProps {
+  // id: number;
+  title: string;
+  imageUrl: string;
+  price: number;
+  // category?: number;
+}
+
+const FullPizza: React.FC = () => {
   const { id } = useParams();
-  const [pizza, setPizza] = useState();
+  const [pizza, setPizza] = useState<PizzaProps>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +32,7 @@ const FullPizza = () => {
 
     fetchPizza();
   }, []);
-  
+
   if (!pizza) {
     return <div className="container">Идет загрузка питсы</div>;
   }
