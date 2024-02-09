@@ -4,11 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { selectFilter } from "../redux/slices/selectors";
-import {
-  setCategoryId,
-  setCurrentPage,
-  setFilters,
-} from "../redux/slices/filterSlice";
+import { setCurrentPage, setFilters } from "../redux/slices/filterSlice";
 import axios from "axios";
 import { SearchContext } from "../App";
 import Categories from "./../components/Categories";
@@ -17,6 +13,7 @@ import PizzaBlock from "./../components/PizzaBlock/index";
 import { Pagination } from "../components/Pagination";
 import { Skeleton } from "./../components/PizzaBlock/Skeleton";
 import "../scss/app.scss";
+import { setItems } from "../redux/slices/pizzaSlice";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -25,9 +22,9 @@ const Home = () => {
   const isMounted = React.useRef(false);
 
   const { categoryId, sort, currentPage } = useSelector(selectFilter);
+  const items = useSelector((state) => state.pizza.items);
 
   const { searchValue } = React.useContext(SearchContext);
-  const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const onChangePage = (page) => {
@@ -51,10 +48,10 @@ const Home = () => {
     //     setIsLoading(false);
     //   });
     try {
-      const res = await axios.get(
+      const { data } = await axios.get(
         `https://65bbae1852189914b5bcdaf4.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&${search}`
       );
-      setItems(res.data);
+      dispatch(setItems(data));
     } catch (error) {
       alert("Ошибка при получении пицц! Мы уже решаем это проблему.");
     } finally {
