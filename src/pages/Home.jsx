@@ -1,10 +1,9 @@
 import React from "react";
 import qs from "qs";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { selectFilter } from "../redux/slices/selectors";
 import { setCurrentPage, setFilters } from "../redux/slices/filterSlice";
-import { SearchContext } from "../App";
 import Categories from "./../components/Categories";
 import Sort, { sortName } from "../components/Sort";
 import PizzaBlock from "./../components/PizzaBlock/index";
