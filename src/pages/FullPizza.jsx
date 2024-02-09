@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-
 const FullPizza = () => {
   const { id } = useParams();
   const [pizza, setPizza] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchPizza() {
@@ -14,7 +14,10 @@ const FullPizza = () => {
         );
         setPizza(data);
       } catch (error) {
-        alert("Ошибка при получении питсы");
+        alert(
+          "К сожалению мы не смогли найти вашу питсу, попробуйте выбрать другую"
+        );
+        navigate("/");
       }
     }
 
@@ -29,7 +32,7 @@ const FullPizza = () => {
     <div className="container">
       <img src={pizza.imageUrl} alt="" />
       <h1>{pizza.title}</h1>
-      <h2>от  {pizza.price} ₽</h2>
+      <h2>от {pizza.price} ₽</h2>
     </div>
   );
 };
