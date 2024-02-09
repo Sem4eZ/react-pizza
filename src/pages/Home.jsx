@@ -2,7 +2,6 @@ import React from "react";
 import qs from "qs";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import { selectFilter } from "../redux/slices/selectors";
 import { setCurrentPage, setFilters } from "../redux/slices/filterSlice";
 import { SearchContext } from "../App";
@@ -12,7 +11,7 @@ import PizzaBlock from "./../components/PizzaBlock/index";
 import { Pagination } from "../components/Pagination";
 import { Skeleton } from "./../components/PizzaBlock/Skeleton";
 import "../scss/app.scss";
-import { fetchPizzas, setItems } from "../redux/slices/pizzaSlice";
+import { fetchPizzas } from "../redux/slices/pizzaSlice";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -21,51 +20,31 @@ const Home = () => {
   const isMounted = React.useRef(false);
 
   const { categoryId, sort, currentPage } = useSelector(selectFilter);
-  const items = useSelector((state) => state.pizza.items);
+  const { items, status } = useSelector((state) => state.pizza);
 
   const { searchValue } = React.useContext(SearchContext);
-  const [isLoading, setIsLoading] = React.useState(true);
 
   const onChangePage = (page) => {
     dispatch(setCurrentPage(page));
   };
 
   const getPizzas = async () => {
-    setIsLoading(true);
-
     const sortBy = sort.sortProperty.replace("-", "");
     const order = sort.sortProperty.includes("-") ? "asc" : "desc";
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `search=${searchValue}` : "";
 
-    // await axios
-    //   .get(
-    //     `https://65bbae1852189914b5bcdaf4.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&${search}`
-    //   )
-    //   .then((res) => {
-    //     setItems(res.data);
-    //     setIsLoading(false);
-    //   });
-    try {
-dispatch(
-  fetchPizzas({
-    params: {
-      sortBy,
-      order,
-      category,
-      search,
-      currentPage: 1,
-    }
-  })
-);
-    } catch (error) {
-      console.log(
-        "Ошибка при получении пицц! Мы уже решаем это проблему.",
-        error
-      );
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(
+      fetchPizzas({
+        params: {
+          sortBy,
+          order,
+          category,
+          search,
+          currentPage: 1,
+        },
+      })
+    );
 
     window.scrollTo(0, 0);
   };
@@ -123,7 +102,9 @@ dispatch(
         <Sort value={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      <div className="content__items">
+        {status === "loading" ? skeletons : pizzas}
+      </div>
 
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
