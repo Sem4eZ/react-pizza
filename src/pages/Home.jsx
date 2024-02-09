@@ -49,7 +49,6 @@ const Home = () => {
     window.scrollTo(0, 0);
   };
 
-  // Если изменили параметры и был первый рендер
   React.useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
@@ -62,7 +61,6 @@ const Home = () => {
     isMounted.current = true;
   }, [categoryId, sort.sortProperty, currentPage]);
 
-  // Если был первый рендер, то проверяем URl-параметры и сохраняем в редуксе
   React.useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
@@ -80,7 +78,6 @@ const Home = () => {
     }
   }, []);
 
-  // Если был первый рендер, то запрашиваем пиццы
   React.useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -90,7 +87,6 @@ const Home = () => {
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
-
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
   ));

@@ -4,8 +4,9 @@ import Cart from "../pages/Cart";
 import Search from "./Search";
 import cartSlice from "../redux/slices/cartSlice";
 import { useSelector } from "react-redux";
+import { selectCart } from "../redux/slices/selectors";
 const Header = () => {
-  const { items, totalPrice } = useSelector((state) => state.cart);
+  const { items, totalPrice } = useSelector(selectCart);
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
   const totalSum = items.reduce((sum, acc) => {
     return acc.price * acc.count + sum;
