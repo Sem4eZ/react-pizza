@@ -5,8 +5,11 @@ import { useSelector } from "react-redux";
 import { selectCart } from "../redux/slices/selectors";
 const Header = () => {
   const { items } = useSelector(selectCart);
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
-  const totalSum = items.reduce((sum, acc) => {
+  const totalCount = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
+  const totalSum = items.reduce((sum: number, acc: any) => {
     return acc.price * acc.count + sum;
   }, 0);
 
