@@ -1,9 +1,26 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import cartSlice, { addItem } from "../../redux/slices/cartSlice";
+import { addItem } from "../../redux/slices/cartSlice";
 import { Link } from "react-router-dom";
-const PizzaBlock = ({ id, title, price, imageUrl, sizes, types, rating }) => {
+
+interface PizzaBlockProps {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+  rating?: number;
+}
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+}) => {
   const dispatch = useDispatch();
   let [pizzaCount, setPizzaCount] = useState(0);
 
@@ -11,11 +28,11 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types, rating }) => {
     setPizzaCount(++pizzaCount);
   };
 
-  const cartItem = useSelector((state) =>
-    state.cart.items.find((obj) => obj.id === id)
+  const cartItem: any = useSelector<any>((state) =>
+    state.cart.items.find((obj: any) => obj.id === id)
   );
 
-  const addedCount = cartItem ? cartItem.count : 0;
+  const addedCount: any = cartItem ? cartItem.count : 0;
   const typeOfDough = ["традиционное", "тонкое"];
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(1);
