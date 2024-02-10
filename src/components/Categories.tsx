@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCategoryId } from "../redux/slices/filterSlice";
-const Categories = ({ value }) => {
+
+interface CategoriesProps {
+  value: number;
+}
+const Categories: React.FC<CategoriesProps> = ({ value }) => {
   const dispatch = useDispatch();
   const categories = [
     "Все",
@@ -12,7 +16,7 @@ const Categories = ({ value }) => {
     "Закрытые",
   ];
 
-  const onChangeCategory = React.useCallback((idx) => {
+  const onChangeCategory = React.useCallback((idx: number) => {
     dispatch(setCategoryId(idx));
   }, []);
 
