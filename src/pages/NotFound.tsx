@@ -1,6 +1,6 @@
 import React from "react";
 
-const NotFound = () => {
+const NotFound: React.FC = () => {
   return <div className="container">Такой страницы не существует</div>;
 };
 
