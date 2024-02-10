@@ -5,13 +5,16 @@ import { useSelector } from "react-redux";
 import CartItem from "../components/CartItem";
 import { clearItem } from "../redux/slices/cartSlice";
 import EmptyCart from "../components/EmptyCart";
+import { selectCartItems } from "../redux/slices/selectors";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { totalPrice } = useSelector((state) => state.cart);
-  const items = useSelector((state) => state.cart.items);
-  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
-  const totalSum = items.reduce((sum, acc) => {
+  const items = useSelector(selectCartItems);
+  const totalCount = items.reduce(
+    (sum: number, item: any) => sum + item.count,
+    0
+  );
+  const totalSum = items.reduce((sum: number, acc: any) => {
     return acc.price * acc.count + sum;
   }, 0);
 
@@ -104,9 +107,10 @@ const Cart = () => {
             </div>
           </div>
           <div className="content__items">
-            {items.map((item) => item.count > 0 && (
-              <CartItem key={item.id} {...item} />
-            ))}
+            {items.map(
+              (item: any) =>
+                item.count > 0 && <CartItem key={item.id} {...item} />
+            )}
           </div>
           <div className="cart__bottom">
             <div className="cart__bottom-details">
