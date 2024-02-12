@@ -3,15 +3,12 @@ import axios from "axios";
 
 export const fetchPizzas = createAsyncThunk(
   "pizza/fetchPizzasStatus",
-  async ({ sortBy, order, category, search, currentPage }) => {
-    try {
-      const { data } = await axios.get(
-        `https://65bbae1852189914b5bcdaf4.mockapi.io/items?page=${currentPage}&limit=4&category=${category}&sortBy=${sortBy}&order=${order}&search=${search}`
-      );
-      return data;
-    } catch (error) {
-      throw error;
-    }
+  async (payload) => {
+    const { sortBy, order, category, search, currentPage } = payload.params;
+    const { data } = await axios.get(
+      `https://65bbae1852189914b5bcdaf4.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}&${search}`
+    );
+    return data;
   }
 );
 
