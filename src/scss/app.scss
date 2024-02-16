@@ -22,6 +22,43 @@ body {
 .content {
   padding: 40px 0;
 
+  @media (max-width: 660px) {
+    padding: 0;
+
+    .cart__item-info p,
+    .cart__item-info h3 {
+      font-size: 14px;
+      padding-left: 20px;
+    }
+  }
+  @media (max-width: 580px) {
+    padding: 0;
+
+    .cart__item-info p,
+    .cart__item-info h3 {
+      font-size: 14px;
+      padding-left: 30px;
+    }
+
+    .cart__item-price {
+      display: none;
+    }
+    .cart__item-remove {
+      margin-left: auto;
+    }
+  }
+  @media (max-width: 400px) {
+    padding: 0;
+
+    .cart__item-count {
+      margin-left: 35px;
+    }
+    .button--circle {
+      min-width: 18px;
+      height: 18px;
+    }
+  }
+
   &__title {
     margin: 35px 0;
     font-weight: 700;
